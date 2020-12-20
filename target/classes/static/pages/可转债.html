@@ -62,7 +62,7 @@ new Vue({
    }
   ,mounted () {
     axios
-      .get('http://localhost:8080/stock_json')
+      .get('/stock_json')
       .then(response => (this.info = response.data.rows, this.Direct_rt())
       )
       .catch(function (error) { // 请求失败处理
