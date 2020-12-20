@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns: xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>可转债</title>
@@ -8,9 +8,28 @@
 </head>
 <body>
 <div id="app">
-  <div v-for="s in info">
-    {{s.bond_nm}}
-  </div>
+    <h1>sinscry 选股策略</h1>
+    <p>数据来源:https://www.jisilu.cn/data/cbnew/#cb</p>
+  <table>
+      <tr>
+          <th>代码</th>
+          <th>股名</th>
+          <th>债名</th>
+          <th>转股价</th>
+          <th>正股价</th>
+          <th v-on:click="Direct_rt()">转正比</th>
+          <th>到期时间</th>
+      </tr>
+      <tr v-for="s in info">
+          <td>{{s.id}}</td>
+          <td>{{s.cell.stock_nm}}</td>
+          <td>{{s.cell.bond_nm}}</td>
+          <td>{{s.cell.convert_price }}</td>
+          <td>{{s.cell.sprice}}</td>
+          <td>{{(s.cell.convert_price/s.cell.sprice * 100).toFixed(2)}}%</td>
+          <td>{{s.cell.maturity_dt}}</td>
+      </tr>
+  </table>
 </div>
 
 <script type="text/javascript" src="http://data.eastmoney.com/js_001/load_table_data_pc.js"></script>
@@ -19,14 +38,32 @@ new Vue({
   el: '#app',
   data () {
     return {
-      info: null
+      info: null,
+      dr_s: 1
     }
   }
   ,
-  mounted () {
+   methods:{
+    Direct_rt:function (){
+        for (var i=0;i<this.info.length-1;i++){
+            for(var j=0;j<this.info.length-1-i;j++){
+                var comp = this.info[j].cell.convert_price/this.info[j].cell.sprice<this.info[j+1].cell.convert_price/this.info[j+1].cell.sprice;
+                //前面是降序后面是降序
+                if ((comp && this.dr_s==1)||(comp==false && this.dr_s!=1)){
+                    var tmp = this.info[j];
+                    this.info[j]=this.info[j+1];
+                    this.info[j+1]=tmp;
+                }
+            }
+        }
+        this.dr_s = -this.dr_s;
+        this.$forceUpdate();
+    }
+   }
+  ,mounted () {
     axios
       .get('http://localhost:8080/stock_json')
-      .then(response => (this.info = response.data.rows)
+      .then(response => (this.info = response.data.rows, this.Direct_rt())
       )
       .catch(function (error) { // 请求失败处理
         console.log(error);

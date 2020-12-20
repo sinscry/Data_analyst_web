@@ -9,8 +9,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>14</source>
-                    <target>14</target>
+                    <source>15</source>
+                    <target>15</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -20,10 +20,15 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>Convertible_bond.AppApplication</mainClass>
+                            <mainClass>Convertible_bond.AppApplication</mainClass><!--入口类，main-->
                         </manifest>
                     </archive>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId><!--要通过maven进行打包操作 需要这个插件-->
+                <version>2.3.5.RELEASE</version>
             </plugin>
         </plugins>
     </build>
@@ -58,6 +63,11 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.47</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version>
         </dependency>
     </dependencies>
 </project>
