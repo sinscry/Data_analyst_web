@@ -1,4 +1,4 @@
-#### Data_-analyst_web
+#### Data_analyst_web
 
 * 初步逻辑:
 	1. springmvc构建后端，上传excel文件，并导入MySQL库里：

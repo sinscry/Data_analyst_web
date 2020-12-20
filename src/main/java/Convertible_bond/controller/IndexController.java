@@ -31,10 +31,10 @@ public class IndexController {
     public String stock_json() throws IOException {
         //后台Http请求转发解决跨域问题
         HttpClient client = HttpClients.createDefault();            //client对象
-        HttpGet get = new HttpGet("http://dcfm.eastmoney.com/em_mutisvcexpandinterface/api/js/get?type=KZZ_LB2.0&token=70f12f2f4f091e459a279469fe49eca5&cmd=&st=YJL&sr=-1&p=1&ps=50&rt=53608710");    //创建get请求
+        HttpGet get = new HttpGet("https://www.jisilu.cn/data/cbnew/cb_list/?___jsl=LST___t=1608430043802");    //创建get请求
         CloseableHttpResponse response = (CloseableHttpResponse) client.execute(get);   //执行get请求
         String mes = EntityUtils.toString(response.getEntity());    //将返回体的信息转换为字符串
-        System.out.println(mes);
+//        System.out.println(mes);
         return mes;
     }
 }
