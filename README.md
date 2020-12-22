@@ -27,6 +27,7 @@
 						)
 						```   
                    * 插入数据:`INSERT INTO stock_usr.usrs (usr,stock_id,stock_nm,oprice) VALUES   ("梁鸿振","sh600000","浦发银行",9.717);`
+				   * 删除数据:`delete from stock_usr.usrs where usr=“测试”`
 				2. 使用mybatis查询数据
 					* name,stock_id,stock_nm,oprice在数据库可取
 					* sprice(现价):`String sprice=Client.get("http://hq.sinajs.cn/list="+stock_id).split(",")[3];`
