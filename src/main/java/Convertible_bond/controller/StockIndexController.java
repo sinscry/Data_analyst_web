@@ -1,6 +1,8 @@
 package Convertible_bond.controller;
 
 import Convertible_bond.pojo.Client;
+import Convertible_bond.pojo.MyUser;
+import Convertible_bond.pojo.Mybatis_mysql;
 import com.alibaba.fastjson.JSONArray;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -22,6 +24,9 @@ public class StockIndexController {
     @Autowired
     private Client Client;
 
+    @Autowired
+    private Mybatis_mysql Mybatis_mysql;
+
     @RequestMapping("/stock")
     public String stock(){
         return "可转债";
@@ -39,20 +44,25 @@ public class StockIndexController {
     @ResponseBody
     @CrossOrigin
     public String usr_json() throws IOException {
-        String name="梁鸿振";
-        List<String> stock_list=new ArrayList<String>();
+        //获取用户名数组
+        List<String> name_list = Mybatis_mysql.selectAllName();
 
-        String stock_id = "sh600000";
-        String sprice=Client.get("http://hq.sinajs.cn/list="+stock_id).split(",")[3];
-        String oprice="9.71";
-        String stock_nm="浦发银行";
-        String stock_li = "{'stock_id':'"+stock_id+"','stock_nm':'"+stock_nm+"','sprice':'"+sprice+"','oprice':'"+oprice+"'}";
-        stock_list.add(stock_li);
-
-        //查询结构
-        //String stock_list = "[{'stock_id':'sh600000','stock_nm':'浦发银行','sprice':'9.72','oprice':'9.71'}]";
-        String Result_json="[{'name':'"+name+"','stock_list':"+stock_list+"}]";
-        JSONArray jsonArray = JSONArray.parseArray(Result_json);
+        List<String> Result_list=new ArrayList<String>();
+        //根据用户名构建Result_list:[{'name':'"+name+"','stock_list':"+stock_list+"}]
+        for (String name:name_list){
+            //根据用户名获取信息
+            List<MyUser> usr_list=Mybatis_mysql.selectByName(name);
+            List<String> stock_list=new ArrayList<String>();
+            //根据每股代码构建stock_list
+            for (MyUser usr:usr_list){
+                String sprice=Client.get("http://hq.sinajs.cn/list="+usr.stock_id).split(",")[3];
+                String stock_li = "{'stock_id':'"+usr.stock_id+"','stock_nm':'"+usr.stock_nm+"','sprice':'"+sprice+"','oprice':'"+usr.oprice+"'}";
+                stock_list.add(stock_li);
+            }
+            String Result_li = "{'name':'"+name+"','stock_list':"+stock_list+"}";
+            Result_list.add(Result_li);
+        }
+        JSONArray jsonArray = JSONArray.parseArray(Result_list.toString());
         return jsonArray.toString();
     }
 
@@ -63,7 +73,7 @@ public class StockIndexController {
     @ResponseBody
     @CrossOrigin
     public String test() throws IOException {
-        return "测试";
+        return "t";
     }
 
 

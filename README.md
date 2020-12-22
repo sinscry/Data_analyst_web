@@ -28,6 +28,17 @@
 						```   
                    * 插入数据:`INSERT INTO stock_usr.usrs (usr,stock_id,stock_nm,oprice) VALUES   ("梁鸿振","sh600000","浦发银行",9.717);`
 				2. 使用mybatis查询数据
+					* name,stock_id,stock_nm,oprice在数据库可取
+					* sprice(现价):`String sprice=Client.get("http://hq.sinajs.cn/list="+stock_id).split(",")[3];`
+					* 构建目标json:
+						```
+						//查询结构
+						//String name='梁鸿振'
+						//String stock_list = "[{'stock_id':'sh600000','stock_nm':'浦发银行','sprice':'9.72','oprice':'9.71'}]";
+						String Result_json="[{'name':'"+name+"','stock_list':"+stock_list+"}]";
+						JSONArray jsonArray = JSONArray.parseArray(Result_json);
+						return jsonArray.toString();
+						```
 					
 					
 				

@@ -1,10 +1,10 @@
 package Convertible_bond.pojo;
 
 public class MyUser {
-    private String usr;
-    private String stock_id;
-    private String stock_nm;
-    private double oprice;
+    public String usr;
+    public String stock_id;
+    public String stock_nm;
+    public double oprice;
 
     public void setOprice(double oprice) {
         this.oprice = oprice;
@@ -36,5 +36,9 @@ public class MyUser {
 
     public String getUsr() {
         return usr;
+    }
+    @Override
+    public String toString(){ //为了方便查看结果，重写了toString方法
+        return "User[usr=" + usr + ",stock_id=" + stock_id + ",stock_nm=" + stock_nm + ",oprice="+oprice+"]";
     }
 }

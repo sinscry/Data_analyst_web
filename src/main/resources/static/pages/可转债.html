@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns: xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html xmlns: xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>可转债</title>
@@ -60,7 +60,7 @@
                             <td>{{s.stock_nm}}</td>
                             <td>{{s.sprice}}</td>
                             <td>{{s.oprice}}</td>
-                            <td>{{((s.sprice-s.oprice)/s.oprice*100).toFixed(2)}}%</td>
+                            <td v-bind:class="{'green-text':(s.sprice-s.oprice)<0,'red-text':(s.sprice-s.oprice)>0}">{{((s.sprice-s.oprice)/s.oprice*100).toFixed(2)}}%</td>
                         </tr>
                     </tbody>
             </table>
