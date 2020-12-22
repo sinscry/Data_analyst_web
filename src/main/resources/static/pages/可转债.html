@@ -55,7 +55,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="s in usr.stock_list">
-                            <td><button v-if="usr.click==-1">删除</button></td>
+                            <td><button v-if="usr.click==-1" v-on:click="axios_del_stock(usr.name,s.stock_id)">删除</button></td>
                             <td>{{s.stock_id}}</td>
                             <td>{{s.stock_nm}}</td>
                             <td>{{s.sprice}}</td>
@@ -63,11 +63,11 @@
                             <td v-bind:class="{'green-text':(s.sprice-s.oprice)<0,'red-text':(s.sprice-s.oprice)>0}">{{((s.sprice-s.oprice)/s.oprice*100).toFixed(2)}}%</td>
                         </tr>
                         <tr v-if="usr.click==-1">
-                            <td><button>添加</button></td>
+                            <td><button v-on:click="axios_add_stock(usr.name,usr.add_stock_id,usr.add_oprice)">添加</button></td>
+                            <td><input v-model="usr.add_stock_id"></td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
+                            <td><input v-model="usr.add_oprice"></td>
                         </tr>
                     </tbody>
             </table>
@@ -88,6 +88,7 @@ new Vue({
   }
   ,
    methods:{
+        //获取可转债数据后排序算法:用冒泡排序
         Direct_rt:function (){
             for (var i=0;i<this.info.length-1;i++){
                 for(var j=0;j<this.info.length-1-i;j++){
@@ -104,16 +105,39 @@ new Vue({
             this.$forceUpdate();
         },
        //添加是否编辑模式
-       Add_click_usr:function (){
+       Add_usr_option:function (){
             for(var i in this.usr_list){
                 this.usr_list[i].click=1;
+                this.usr_list[i].add_stock_id="sh";
+                this.usr_list[i].add_oprice=0;
             }
        },
        //刷新界面
        simple_refresh:function (){
             // console.log("simple_refresh");
            this.$forceUpdate();
-       }
+       },
+       //增加数据
+       axios_add_stock:function (name,stock_id,oprice){
+            if (oprice<=0) alert("购入价至少大于0");
+            else{
+                axios.post("/axios_add_stock",{
+                    name:name,stock_id:stock_id,oprice:oprice
+                }).then(function (res){
+                    alert(res.data);
+                    if (res.data=="添加成功") location.reload();
+                })
+            }
+       },
+       //减少数据
+       axios_del_stock:function (name,stock_id){
+           axios.post("/axios_del_stock",{
+               name:name,stock_id:stock_id,oprice: 0.0
+           }).then(function (res){
+               alert(res.data);
+               if (res.data=="删除成功") location.reload();
+           })
+       },
 
    }
   ,mounted () {
@@ -130,7 +154,8 @@ new Vue({
         .get('/usr_json')
         .then(response => (
                 this.usr_list = response.data,
-                this.Add_click_usr()
+                //添加属性
+                this.Add_usr_option()
             )
         )
         .catch(function (error) {

@@ -1,17 +1,14 @@
 package Convertible_bond.controller;
 
-import Convertible_bond.pojo.Client;
+import Convertible_bond.dao.Client;
 import Convertible_bond.pojo.MyUser;
-import Convertible_bond.pojo.Mybatis_mysql;
+import Convertible_bond.dao.Mybatis_mysql;
+import Convertible_bond.pojo.axios_stock;
 import com.alibaba.fastjson.JSONArray;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -21,9 +18,13 @@ import java.util.List;
 
 @Controller
 public class StockIndexController {
+
+    //访问数据类
     @Autowired
     private Client Client;
 
+
+    //数据库操作类
     @Autowired
     private Mybatis_mysql Mybatis_mysql;
 
@@ -32,6 +33,7 @@ public class StockIndexController {
         return "可转债";
     }
 
+    //可转债数据
     @RequestMapping("/stock_json")
     @ResponseBody
     @CrossOrigin
@@ -40,6 +42,7 @@ public class StockIndexController {
         return Client.get("https://www.jisilu.cn/data/cbnew/cb_list/?___jsl=LST___t=1608430043802");
     }
 
+    //用户数据
     @RequestMapping("/usr_json")
     @ResponseBody
     @CrossOrigin
@@ -66,6 +69,22 @@ public class StockIndexController {
         return jsonArray.toString();
     }
 
+    //添加数据
+    @RequestMapping("/axios_add_stock")
+    @ResponseBody
+    public String axios_add_stock(@RequestBody axios_stock axios_add_stock) throws IOException {
+        String[] info = Client.get("http://hq.sinajs.cn/list="+axios_add_stock.getStock_id()).split(",");
+        if (info.length==1) return "查无此股";
+        String stock_nm=info[0].split("=\"")[1];
+        return Mybatis_mysql.addMYSQL(axios_add_stock.getName(),axios_add_stock.getStock_id(),stock_nm,axios_add_stock.getOprice());
+    }
+
+    //减少数据
+    @RequestMapping("/axios_del_stock")
+    @ResponseBody
+    public String axios_del_stock(@RequestBody axios_stock axios_del_stock) throws IOException {
+        return Mybatis_mysql.delMYSQL(axios_del_stock.getName(),axios_del_stock.getStock_id());
+    }
 
 
 

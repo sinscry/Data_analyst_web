@@ -21,6 +21,17 @@
 			select usr,stock_id,stock_nm,oprice from stock_usr.usrs where usr = #{usr};
 	</select>
 
+	<!--  增加用户数据	-->
+	<insert id="addMYSQL" parameterType="Convertible_bond.pojo.MyUser">
+		insert into stock_usr.usrs(usr,stock_id,stock_nm,oprice) values(#{usr},#{stock_id},#{stock_nm},#{oprice})
+	</insert>
+
+	<!--     删除一个用户数据 -->
+	<delete id="delMYSQL" parameterType="Convertible_bond.pojo.MyUser">
+			delete from stock_usr.usrs where usr
+			= #{usr} and stock_id = #{stock_id}
+	</delete>
+
 
     <!-- 添加一个用户，#{uname}为 com.mybatis.po.MyUser 的属性值 -->
 <!--    <insert id="addUser" parameterType="po.MyUser">-->
@@ -32,9 +43,5 @@
 <!--			update user set uname =-->
 <!--			#{uname},usex = #{usex} where uid = #{uid}-->
 <!--		</update>-->
-    <!-- 删除一个用户 -->
-<!--    <delete id="deleteUser" parameterType="Integer">-->
-<!--			delete from user where uid-->
-<!--			= #{uid}-->
-<!--		</delete>-->
+
 </mapper>
