@@ -9,16 +9,16 @@
 </head>
 <body>
 <div id="app" class="container">
-    <h1>sinscry 选股策略</h1>
-    <p>数据来源:https://www.jisilu.cn/data/cbnew/#cb</p>
+    <h1 class="row">sinscry 选股策略</h1>
+    <p class="row">数据来源:https://www.jisilu.cn/data/cbnew/#cb</p>
     <div class="row">
         <p class="col s6">选股逻辑:连续30交易日正转比小于70%，可转债会回售</p>
         <p class="col s6">当前选股</p>
     </div>
-
     <div class="row">
-          <table class="responsive-table highlight striped col s6">
-              <thead class="card-panel  teal lighten-1">
+        <div class="col s6">
+            <table class="striped highlight">
+              <thead class="teal lighten-1">
                   <tr>
                       <th >代码</th>
                       <th >股名</th>
@@ -41,9 +41,10 @@
                   </tr>
               </tbody>
           </table>
+        </div>
         <div class="col s6">
-            <table class="responsive-table highlight striped" v-for="usr in usr_list">
-                    <thead class="card-panel  light-blue darken-1">
+                <table class="striped highlight" v-for="usr in usr_list">
+                    <thead class=" light-blue darken-1">
                         <tr>
                             <th class="white-text" v-on:click="usr.click=-usr.click;simple_refresh();">{{usr.name}}</th>
                             <th>代码</th>
