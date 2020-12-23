@@ -12,11 +12,13 @@
     <h1 class="row">sinscry 选股策略</h1>
     <p class="row">数据来源:https://www.jisilu.cn/data/cbnew/#cb</p>
     <div class="row">
-        <p class="col s6">选股逻辑:连续30交易日正转比小于70%，可转债会回售</p>
-        <p class="col s6">当前选股</p>
+        <a class="waves-effect waves-light teal lighten-1 btn" v-on:click="show_lists['convert']=!show_lists['convert'];if(show_lists['convert'])Request_convert();">可转债</a>
+        <a class="waves-effect waves-light light-blue darken-1 btn" v-on:click="show_lists['usr_stocks_list']=!show_lists['usr_stocks_list'];">个人选股</a>
+
     </div>
     <div class="row">
-        <div class="col s6">
+        <div class="col s6" v-if="show_lists['convert']">
+            <p>选股逻辑:连续30交易日正转比小于70%，可转债会回售</p>
             <table class="striped highlight">
               <thead class="teal lighten-1">
                   <tr>
@@ -42,35 +44,36 @@
               </tbody>
           </table>
         </div>
-        <div class="col s6">
-                <table class="striped highlight" v-for="usr in usr_list">
-                    <thead class=" light-blue darken-1">
-                        <tr>
-                            <th class="white-text" v-on:click="usr.click=-usr.click;simple_refresh();">{{usr.name}}</th>
-                            <th>代码</th>
-                            <th>股名</th>
-                            <th>现价</th>
-                            <th>购入价</th>
-                            <th>盈亏</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="s in usr.stock_list">
-                            <td><button v-if="usr.click==-1" v-on:click="axios_del_stock(usr.name,s.stock_id)">删除</button></td>
-                            <td>{{s.stock_id}}</td>
-                            <td>{{s.stock_nm}}</td>
-                            <td>{{s.sprice}}</td>
-                            <td>{{s.oprice}}</td>
-                            <td v-bind:class="{'green-text':(s.sprice-s.oprice)<0,'red-text':(s.sprice-s.oprice)>0}">{{((s.sprice-s.oprice)/s.oprice*100).toFixed(2)}}%</td>
-                        </tr>
-                        <tr v-if="usr.click==-1">
-                            <td><button v-on:click="axios_add_stock(usr.name,usr.add_stock_id,usr.add_oprice)">添加</button></td>
-                            <td><input v-model="usr.add_stock_id"></td>
-                            <td></td>
-                            <td></td>
-                            <td><input v-model="usr.add_oprice"></td>
-                        </tr>
-                    </tbody>
+        <div class="col s6" v-if="show_lists['usr_stocks_list']">
+            <p>当前选股</p>
+            <table class="striped highlight" v-for="usr in usr_list">
+                <thead class=" light-blue darken-1">
+                    <tr>
+                        <th class="white-text" v-on:click="usr.click=-usr.click;simple_refresh();">{{usr.name}}</th>
+                        <th>代码</th>
+                        <th>股名</th>
+                        <th>现价</th>
+                        <th>购入价</th>
+                        <th>盈亏</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="s in usr.stock_list">
+                        <td><button v-if="usr.click==-1" v-on:click="axios_del_stock(usr.name,s.stock_id)">删除</button></td>
+                        <td>{{s.stock_id}}</td>
+                        <td>{{s.stock_nm}}</td>
+                        <td>{{s.sprice}}</td>
+                        <td>{{s.oprice}}</td>
+                        <td v-bind:class="{'green-text':(s.sprice-s.oprice)<0,'red-text':(s.sprice-s.oprice)>0}">{{((s.sprice-s.oprice)/s.oprice*100).toFixed(2)}}%</td>
+                    </tr>
+                    <tr v-if="usr.click==-1">
+                        <td><button v-on:click="axios_add_stock(usr.name,usr.add_stock_id,usr.add_oprice)">添加</button></td>
+                        <td><input v-model="usr.add_stock_id"></td>
+                        <td></td>
+                        <td></td>
+                        <td><input v-model="usr.add_oprice"></td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
@@ -82,13 +85,29 @@ new Vue({
   el: '#app',
   data () {
     return {
+        //承载可转债数据
         info: null,
+        //代表排序顺序
         dr_s: 1,
-        usr_list:null
+        //承载用户数据
+        usr_list:null,
+        //选择默认展示页面
+        show_lists:{'convert':true,'usr_stocks_list':true}
     }
   }
   ,
    methods:{
+        Request_convert:function (){
+            axios
+                .get('/stock_json')
+                .then(response => (this.info = response.data.rows, this.Direct_rt())
+                )
+                .catch(function (error) { // 请求失败处理
+                    console.log(error);
+                });
+        },
+
+
         //获取可转债数据后排序算法:用冒泡排序
         Direct_rt:function (){
             for (var i=0;i<this.info.length-1;i++){
@@ -142,14 +161,8 @@ new Vue({
 
    }
   ,mounted () {
-    axios
-      .get('/stock_json')
-      .then(response => (this.info = response.data.rows, this.Direct_rt())
-      )
-      .catch(function (error) { // 请求失败处理
-        console.log(error);
-      });
-
+      //加载可转债信息;
+      if (this.show_lists['convert']) this.Request_convert();
     //对用户信息进行处理
     axios
         .get('/usr_json')
