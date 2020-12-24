@@ -58,8 +58,11 @@ public class StockIndexController {
             List<String> stock_list=new ArrayList<String>();
             //根据每股代码构建stock_list
             for (MyUser usr:usr_list){
-                String sprice=Client.get("http://hq.sinajs.cn/list="+usr.stock_id).split(",")[3];
-                String stock_li = "{'stock_id':'"+usr.stock_id+"','stock_nm':'"+usr.stock_nm+"','sprice':'"+sprice+"','oprice':'"+usr.oprice+"'}";
+                String get_info[] = Client.get("http://hq.sinajs.cn/list="+usr.stock_id).split(",");
+
+                String sprice=get_info[3];//现价
+                String yprice = get_info[2];//昨天价格
+                String stock_li = "{'stock_id':'"+usr.stock_id+"','stock_nm':'"+usr.stock_nm+"','sprice':'"+sprice+"','oprice':'"+usr.oprice+"','yprice':'"+yprice+"'}";
                 stock_list.add(stock_li);
             }
             String Result_li = "{'name':'"+name+"','stock_list':"+stock_list+"}";

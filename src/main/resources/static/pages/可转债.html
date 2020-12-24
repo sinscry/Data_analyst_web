@@ -53,6 +53,7 @@
                         <th>代码</th>
                         <th>股名</th>
                         <th>现价</th>
+                        <th>涨跌幅</th>
                         <th>购入价</th>
                         <th>盈亏</th>
                     </tr>
@@ -63,6 +64,7 @@
                         <td>{{s.stock_id}}</td>
                         <td>{{s.stock_nm}}</td>
                         <td>{{s.sprice}}</td>
+                        <td v-bind:class="{'green-text':(s.sprice-s.yprice)<0,'red-text':(s.sprice-s.yprice)>0}">{{((s.sprice-s.yprice)/s.yprice*100).toFixed(2)}}%</td>
                         <td>{{s.oprice}}</td>
                         <td v-bind:class="{'green-text':(s.sprice-s.oprice)<0,'red-text':(s.sprice-s.oprice)>0}">{{((s.sprice-s.oprice)/s.oprice*100).toFixed(2)}}%</td>
                     </tr>
