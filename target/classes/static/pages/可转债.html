@@ -56,6 +56,7 @@
                         <th>涨跌幅</th>
                         <th>购入价</th>
                         <th>盈亏</th>
+                        <th>拟出价(盈3%)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,6 +68,7 @@
                         <td v-bind:class="{'green-text':(s.sprice-s.yprice)<0,'red-text':(s.sprice-s.yprice)>0}">{{((s.sprice-s.yprice)/s.yprice*100).toFixed(2)}}%</td>
                         <td>{{s.oprice}}</td>
                         <td v-bind:class="{'green-text':(s.sprice-s.oprice)<0,'red-text':(s.sprice-s.oprice)>0}">{{((s.sprice-s.oprice)/s.oprice*100).toFixed(2)}}%</td>
+                        <td>{{(s.oprice*1.03).toFixed(2)}}</td>
                     </tr>
                     <tr v-if="usr.click==-1">
                         <td><button v-on:click="axios_add_stock(usr.name,usr.add_stock_id,usr.add_oprice)">添加</button></td>
