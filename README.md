@@ -3,6 +3,10 @@
 * 初步逻辑:
 	* 基本资料:
 		* 服务器地址: 120.78.209.24
+			* maven构建执行包:
+				1. 构建jar执行包：`mvn package`
+				2. 进入target：`cd target`
+				3. 执行jar包：`sudo java -jar Data_analyst_web-1.0-SNAPSHOT.jar`
 		* 域名:sinscry.space
 		* 股票数据来源:
 			* 可选债:https://www.jisilu.cn/data/cbnew/#cb
@@ -60,5 +64,4 @@
 		1. 根据excel名构建MySQL表：
 			1. 判断是否重名，是否要覆盖
 			
-	INSERT INTO stock_usr.usrs (usr,stock_id,stock_nm,oprice) VALUES   ("⊙ω⊙","sh600000","浦发银行",0);
 	
