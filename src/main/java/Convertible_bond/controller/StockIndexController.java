@@ -62,7 +62,8 @@ public class StockIndexController {
 
                 String sprice=get_info[3];//现价
                 String yprice = get_info[2];//昨天价格
-                String stock_li = "{'stock_id':'"+usr.stock_id+"','stock_nm':'"+usr.stock_nm+"','sprice':'"+sprice+"','oprice':'"+usr.oprice+"','yprice':'"+yprice+"'}";
+                String hprice = get_info[4];//当日最高价
+                String stock_li = "{'stock_id':'"+usr.stock_id+"','stock_nm':'"+usr.stock_nm+"','sprice':'"+sprice+"','oprice':'"+usr.oprice+"','yprice':'"+yprice+"','hprice':'"+ hprice +"'}";
                 stock_list.add(stock_li);
             }
             String Result_li = "{'name':'"+name+"','stock_list':"+stock_list+"}";
