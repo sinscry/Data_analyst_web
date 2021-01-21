@@ -15,8 +15,8 @@
 	0. 当前目标:
 		* 构建选股网站（www.sinscry.space:80/stock）:
 			* 界面用materilize实现
-			1. 显示可转债按正转比排序：(完成)
-			2. 显示本人选股和价格：(进行中)
+			1. 显示可转债按正转比排序：(done)
+			2. 显示本人选股和价格：(done)
 			    1. MySQL数据库的stock_usr.usrs记载数据:
 					* 远程MySql:`mysql -h sinscry.space -u sinscry -p`
 			        * `create database stock_usr`
@@ -49,13 +49,15 @@
 						JSONArray jsonArray = JSONArray.parseArray(Result_json);
 						return jsonArray.toString();
 						```
-				3. 添加持仓数据功能:(完成)
-				4. 删除持仓数据功能:(完成)
+				3. 添加持仓数据功能:(done)
+				4. 删除持仓数据功能:(done)
 			3. 添加访问日志（logback）
-			4. 调整添加的位置（完成）
-			5. 添加点评区
+			4. 添加跳转股票数据链接
+			5. 添加点评区（双击击可修改的那种）
 			6. 到目标股价发邮箱提醒
 			7. 设置实操和意愿根据用户列（如lhz意愿+实操）
+			8. vue更改购入价限制，从大于0改成大于等于0
+			9. 添加交易历史日志
 					
 				
 				
