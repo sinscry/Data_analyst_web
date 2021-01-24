@@ -67,6 +67,10 @@
 			7. 设置实操和意愿根据用户列（如lhz意愿+实操）
 			8. vue更改购入价限制，从大于0改成大于等于0(done)
 			9. 添加交易历史日志
+			10. 添加icon(done)
+				* 生成图标网站:https://tool.lu/favicon/
+				* 必须重命名为favicon.ico
+				* 放在 main/resources/static下
 					
 				
 				
