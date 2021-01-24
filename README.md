@@ -1,5 +1,7 @@
 #### Data_analyst_web
 
+* 他山之石：https://www.doctorxiong.club/#/stock/detail
+
 * 初步逻辑:
 	* 基本资料:
 		* 服务器地址: 120.78.209.24
@@ -11,6 +13,7 @@
 		* 股票数据来源:
 			* 可选债:https://www.jisilu.cn/data/cbnew/#cb
 			* 新浪股票api:https://www.jianshu.com/p/108b8110a98c
+			* 历史股票数据（搜狐）：https://www.cnblogs.com/ldlchina/archive/2004/01/13/5392670.html
 		* 远程MySql数据库的数据表: stock_usr.usrs;
 	0. 当前目标:
 		* 构建选股网站（www.sinscry.space:80/stock）:
