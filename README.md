@@ -71,7 +71,9 @@
 				* 生成图标网站:https://tool.lu/favicon/
 				* 必须重命名为favicon.ico
 				* 放在 main/resources/static下
-			11. 在选股隔壁放大盘指数
+			11. 在选股隔壁放大盘指数(done)
+				* 上证:http://hq.sinajs.cn/list=s_sh000001
+				* 深证:http://hq.sinajs.cn/list=s_sz399001
 					
 				
 				

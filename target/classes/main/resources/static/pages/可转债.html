@@ -9,12 +9,18 @@
 </head>
 <body>
 <div id="app" class="container">
-    <h1 class="row">sinscry 选股策略</h1>
-    <p class="row">数据来源:https://www.jisilu.cn/data/cbnew/#cb</p>
+    <div class="row">
+        <div class="col s6">
+            <h1 class="row">sinscry 选股策略</h1>
+        </div>
+        <div class="col s6">
+            <h4 v-bind:class="{'green-text':sh_sz.sh_ch<0,'red-text':sh_sz.sh_ch>0}">{{sh_sz.sh_exp}} &nbsp;&nbsp;&nbsp;<font size="5">{{sh_sz.sh_ch}}</font></h4>
+            <h4 v-bind:class="{'green-text':sh_sz.sz_ch<0,'red-text':sh_sz.sz_ch>0}">{{sh_sz.sz_exp}} &nbsp;&nbsp;&nbsp;<font size="5">{{sh_sz.sz_ch}}</font></h4>
+        </div>
+    </div>
     <div class="row">
         <a class="waves-effect waves-light teal lighten-1 btn" v-on:click="show_lists['convert']=!show_lists['convert'];if(show_lists['convert'])Request_convert();">可转债</a>
         <a class="waves-effect waves-light light-blue darken-1 btn" v-on:click="show_lists['usr_stocks_list']=!show_lists['usr_stocks_list'];">个人选股</a>
-
     </div>
     <div class="row">
         <div class="col s6" v-if="show_lists['convert']">
@@ -101,7 +107,9 @@ new Vue({
         //承载用户数据
         usr_list:null,
         //选择默认展示页面
-        show_lists:{'convert':true,'usr_stocks_list':true}
+        show_lists:{'convert':true,'usr_stocks_list':true},
+        //大盘指数
+        sh_sz:{'sh_exp':null,'sh_ch':null,'sz_exp':null,'sz_ch':null}
     }
   }
   ,
@@ -168,8 +176,20 @@ new Vue({
            })
        },
 
+       //单纯获取数据
+       axios_sim_stock:async function (url) {
+            var tmp;
+           await axios.get("/axios_sim_stock", {params: {url: url}})
+               .then(function (res) {
+                   tmp=res.data;
+               });
+           return tmp;
+       }
+
    }
   ,mounted () {
+      var that=this;
+
       //加载可转债信息;
       if (this.show_lists['convert']) this.Request_convert();
     //对用户信息进行处理
@@ -184,6 +204,16 @@ new Vue({
         .catch(function (error) {
             console.log(error);
         });
+    //获取大盘指数
+    this.axios_sim_stock("http://hq.sinajs.cn/list=s_sh000001").then(v=>{
+        that.sh_sz.sh_exp=v.split(",")[1];
+        that.sh_sz.sh_ch=v.split(",")[3];
+    });
+    this.axios_sim_stock("http://hq.sinajs.cn/list=s_sz399001").then(v=>{
+        that.sh_sz.sz_exp=v.split(",")[1];
+        that.sh_sz.sz_ch=v.split(",")[3];
+    });
+
   }
 })
 
