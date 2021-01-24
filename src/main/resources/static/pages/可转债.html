@@ -34,7 +34,7 @@
               <tbody>
                   <tr v-for="s in info">
                       <td>{{s.cell.stock_id}}</td>
-                      <td>{{s.cell.stock_nm}}</td>
+                      <td><a :href="'https://xueqiu.com/S/'+s.cell.stock_id" target="_blank" class="blue-grey-text">{{s.cell.stock_nm}}</a></td>
                       <td>{{s.cell.bond_nm}}</td>
                       <td>{{s.cell.sprice}}</td>
                       <td>{{s.cell.convert_price }}</td>
@@ -64,7 +64,7 @@
                     <tr v-for="s in usr.stock_list">
                         <td><button v-if="usr.click==-1" v-on:click="axios_del_stock(usr.name,s.stock_id)">删除</button></td>
                         <td>{{s.stock_id}}</td>
-                        <td>{{s.stock_nm}}</td>
+                        <td><a :href="'https://xueqiu.com/S/'+s.stock_id" target="_blank" class="blue-grey-text">{{s.stock_nm}}</a></td>
                         <td>{{s.sprice}}</td>
                         <td v-bind:class="{'green-text':(s.sprice-s.yprice)<0,'red-text':(s.sprice-s.yprice)>0}">{{((s.sprice-s.yprice)/s.yprice*100).toFixed(2)}}%</td>
                         <td>{{s.oprice}}</td>
@@ -148,7 +148,7 @@ new Vue({
        },
        //增加数据
        axios_add_stock:function (name,stock_id,oprice){
-            if (oprice<=0) alert("购入价至少大于0");
+            if (oprice<0) alert("购入价不能小于0");
             else{
                 axios.post("/axios_add_stock",{
                     name:name,stock_id:stock_id,oprice:oprice
