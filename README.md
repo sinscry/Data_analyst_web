@@ -1,5 +1,7 @@
 #### Data_analyst_web
 
+* 他山之石：https://www.doctorxiong.club/#/stock/detail
+
 * 初步逻辑:
 	* 基本资料:
 		* 服务器地址: 120.78.209.24
@@ -11,6 +13,7 @@
 		* 股票数据来源:
 			* 可选债:https://www.jisilu.cn/data/cbnew/#cb
 			* 新浪股票api:https://www.jianshu.com/p/108b8110a98c
+			* 历史股票数据（搜狐）：https://www.cnblogs.com/ldlchina/archive/2004/01/13/5392670.html
 		* 远程MySql数据库的数据表: stock_usr.usrs;
 	0. 当前目标:
 		* 构建选股网站（www.sinscry.space:80/stock）:
@@ -52,13 +55,26 @@
 				3. 添加持仓数据功能:(done)
 				4. 删除持仓数据功能:(done)
 			3. 添加访问日志（logback）
-			4. 添加跳转股票数据链接
+			4. 添加跳转股票数据链接(done+用的是雪球网:https://xueqiu.com/S/sz000060)
 			5. 添加点评区（双击击可修改的那种）
+				1. 在mysql建立新表特地存放点评（根据不同用户显示）
+				2. 添加时可以设置
+				3. 自动绑定
 			6. 到目标股价发邮箱提醒
+				1. 定时查询
+				2. 自动计算
+				3. 邮件发回
 			7. 设置实操和意愿根据用户列（如lhz意愿+实操）
-			8. vue更改购入价限制，从大于0改成大于等于0
+			8. vue更改购入价限制，从大于0改成大于等于0(done)
 			9. 添加交易历史日志
 			10. 开头显示大盘数据
+			11. 添加icon(done)
+				* 生成图标网站:https://tool.lu/favicon/
+				* 必须重命名为favicon.ico
+				* 放在 main/resources/static下
+			12. 在选股隔壁放大盘指数(done)
+				* 上证:http://hq.sinajs.cn/list=s_sh000001
+				* 深证:http://hq.sinajs.cn/list=s_sz399001
 					
 				
 				

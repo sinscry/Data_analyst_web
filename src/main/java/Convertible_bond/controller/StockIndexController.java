@@ -7,10 +7,7 @@ import Convertible_bond.pojo.axios_stock;
 import com.alibaba.fastjson.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,6 +38,17 @@ public class StockIndexController {
         //后台Http请求转发解决跨域问题
         return Client.get("https://www.jisilu.cn/data/cbnew/cb_list/?___jsl=LST___t=1608430043802");
     }
+    //单纯转发数据
+    @RequestMapping(value="/axios_sim_stock")
+    @ResponseBody
+    @CrossOrigin
+    public String axios_sim_stock(@RequestParam(value = "url") String url) throws IOException {
+        //后台Http请求转发解决跨域问题
+        return Client.get(url);
+    }
+
+
+
 
     //用户数据
     @RequestMapping("/usr_json")
