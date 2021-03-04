@@ -18,8 +18,6 @@
 	0. 当前目标:
 		* 构建选股网站（www.sinscry.space:80/stock）:
 			* 界面用materilize实现
-			1. 显示可转债按正转比排序：(done)
-			2. 显示本人选股和价格：(done)
 			    1. MySQL数据库的stock_usr.usrs记载数据:
 					* 远程MySql:`mysql -h sinscry.space -u sinscry -p`
 			        * `create database stock_usr`
@@ -52,10 +50,7 @@
 						JSONArray jsonArray = JSONArray.parseArray(Result_json);
 						return jsonArray.toString();
 						```
-				3. 添加持仓数据功能:(done)
-				4. 删除持仓数据功能:(done)
 			3. 添加访问日志（logback）
-			4. 添加跳转股票数据链接(done+用的是雪球网:https://xueqiu.com/S/sz000060)
 			5. 添加点评区（双击击可修改的那种）
 				1. 在mysql建立新表特地存放点评（根据不同用户显示）
 				2. 添加时可以设置
@@ -65,22 +60,27 @@
 				2. 自动计算
 				3. 邮件发回
 			7. 设置实操和意愿根据用户列（如lhz意愿+实操）
-			8. vue更改购入价限制，从大于0改成大于等于0(done)
 			9. 添加交易历史日志
 			10. 开头显示大盘数据
-			11. 添加icon(done)
-				* 生成图标网站:https://tool.lu/favicon/
-				* 必须重命名为favicon.ico
-				* 放在 main/resources/static下
-			12. 在选股隔壁放大盘指数(done)
-				* 上证:http://hq.sinajs.cn/list=s_sh000001
-				* 深证:http://hq.sinajs.cn/list=s_sz399001
+			13. 美国国债利率实时数据
+				* url:https://cn.investing.com/rates-bonds/government-bond-spreads
 					
+	1. done需求
+		1. 显示可转债按正转比排序：(done)
+		2. 显示本人选股和价格：(done)
+		3. 添加持仓数据功能:(done)
+		4. 删除持仓数据功能:(done)
+		5. 添加跳转股票数据链接(done+用的是雪球网:https://xueqiu.com/S/sz000060)
+		6. vue更改购入价限制，从大于0改成大于等于0(done)
+		7. 添加icon(done)
+			* 生成图标网站:https://tool.lu/favicon/
+			* 必须重命名为favicon.ico
+			* 放在 main/resources/static下
+		8. 在选股隔壁放大盘指数(done)
+			* 上证:http://hq.sinajs.cn/list=s_sh000001
+			* 深证:http://hq.sinajs.cn/list=s_sz399001
 				
-				
-				
-	1. springmvc构建后端，上传excel文件，并导入MySQL库里：
-		1. 根据excel名构建MySQL表：
-			1. 判断是否重名，是否要覆盖
+* 拓展思维
+	* 相关性分析美债和A股
 			
 	
