@@ -38,6 +38,7 @@
                    * 插入数据:`INSERT INTO stock_usr.usrs (usr,stock_id,stock_nm,oprice) VALUES   ("梁鸿振","sh600000","浦发银行",9.717);`
 				   * 删除数据:`delete from stock_usr.usrs where usr=“测试”`
 				   INSERT INTO stock_usr.usrs (usr,stock_id,stock_nm,oprice) VALUES   ("意愿","sh600000","浦发银行",1);
+				   INSERT INTO stock_usr.usrs (usr,stock_id,stock_nm,oprice) VALUES   ("梁鸿振","sh600585","海螺水泥",52.627);
 				2. 使用mybatis查询数据
 					* name,stock_id,stock_nm,oprice在MySQL数据库取
 					* sprice(现价)通过新浪股票api:`String sprice=Client.get("http://hq.sinajs.cn/list="+stock_id).split(",")[3];`
